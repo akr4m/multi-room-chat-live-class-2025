@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Rooms\RoomShowController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -15,7 +16,7 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::view('rooms/{room}', 'rooms.show')
+Route::get('rooms/{room:slug}', RoomShowController::class)
     ->middleware(['auth', 'verified'])
     ->name('rooms.show');
 

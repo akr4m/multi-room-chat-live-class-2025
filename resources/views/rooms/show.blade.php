@@ -1,48 +1,19 @@
 <x-layouts.app :title="__('Room Details')">
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
         <div>
-            <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Room #1</h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400">A <span class="underline font-medium">private</span> room created on <time datetime="2023-03-17T00:00Z">March 17, 2025</time> by Leslie Alexander.</p>
+            <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">{{ $room->name }}</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400">A <span class="underline font-medium">{{ $room->type->value }}</span> room created on <time datetime="2023-03-17T00:00Z">{{ $room->created_at->toDayDateTimeString() }}</time> by {{ $room->user->name }}</p>
         </div>
         <div class="grid grid-cols-12 gap-4">
-            <div class="col-span-4 p-4 rounded-md shadow-sm border bg-white">
-                <h2 class="text-lg font-medium">Users</h2>
-
-                <ul role="list" class="divide-y mt-4 divide-gray-100 dark:divide-white/5">
-                    @for ($i = 0; $i < 3; $i++)
-                        <li class="flex gap-x-2.5 py-3.5">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" class="size-10 flex-none rounded-full bg-gray-50 dark:bg-gray-800 dark:outline dark:-outline-offset-1 dark:outline-white/10" />
-                        <div class="min-w-0">
-                            <p class="text-sm/6 font-semibold text-gray-900 dark:text-white">Leslie Alexander</p>
-                            <p class="truncate text-xs/5 text-gray-500 dark:text-gray-400">leslie.alexander@example.com</p>
-                        </div>
-                        </li>
-                        @endfor
-                </ul>
-
-            </div>
+            @livewire('room.users', ['room' => $room])
 
             <div class="col-span-8 w-full rounded-md shadow-sm border p-4 overflow-hidden bg-white">
                 <div class="flex flex-col h-full justify-between space-y-4">
-                    <div class="h-96 overflow-y-auto border rounded-lg px-4 py-3">
-                        <ul class="flex flex-col-reverse">
-                            @for ($i = 0; $i < 10; $i++)
-                                <li class="flex space-x-3">
-                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" class="size-8 flex-none rounded-full bg-gray-50 dark:bg-gray-800 dark:outline dark:-outline-offset-1 dark:outline-white/10" />
-                                <div>
-                                    <p class="text-sm/6 font-semibold text-gray-900 dark:text-white">Leslie Alexander {{ $i }} <span class="text-xs/5 font-normal text-gray-500 dark:text-gray-400">· 2h ago</span></p>
-                                    <div class="mt-1 text-sm/6 text-gray-700 dark:text-gray-300">
-                                        <p>Hey everyone! Just wanted to check in and see how the project is coming along. Let me know if you need any help or have any questions.</p>
-                                    </div>
-                                </div>
-                                </li>
-                                @endfor
-                        </ul>
-                    </div>
+                    @livewire('room.messages', ['room' => $room])
                     <!-- compose message -->
                     <div class="flex items-start space-x-4">
                         <div class="shrink-0">
-                            <img src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" class="inline-block size-10 rounded-full bg-gray-100 outline -outline-offset-1 outline-black/5 dark:bg-gray-800 dark:outline-white/10" />
+                            <flux:avatar name="{{auth()->user()->initials()}}" />
                         </div>
                         <div class="min-w-0 flex-1">
                             <div class="relative">
