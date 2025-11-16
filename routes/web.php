@@ -15,6 +15,10 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Route::view('rooms/{room}', 'rooms.show')
+    ->middleware(['auth', 'verified'])
+    ->name('rooms.show');
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
