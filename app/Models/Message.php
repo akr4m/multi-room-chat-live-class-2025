@@ -2,28 +2,22 @@
 
 namespace App\Models;
 
-use App\Enums\RoomType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Room extends Model
+class Message extends Model
 {
-    /** @use HasFactory<\Database\Factories\RoomFactory> */
+    /** @use HasFactory<\Database\Factories\MessageFactory> */
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'slug',
-        'description',
-        'type',
+        'body',
     ];
 
-    protected function casts(): array
+    public function room(): BelongsTo
     {
-        return [
-            'type' => RoomType::class,
-        ];
+        return $this->belongsTo(Room::class);
     }
 
     public function user(): BelongsTo
