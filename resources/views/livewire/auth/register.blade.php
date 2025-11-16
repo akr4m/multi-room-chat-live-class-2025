@@ -1,6 +1,6 @@
 <x-layouts.auth>
     <div class="flex flex-col gap-6">
-        <x-auth-header :title="__('Create an account')" :description="__('Enter your details below to create your account')" />
+        <x-auth-header :title="__('Create an account')" :description="__('Join us today and start your journey. All fields are required to create your account.')" />
 
         <!-- Session Status -->
         <x-auth-session-status class="text-center" :status="session('status')" />
@@ -16,8 +16,7 @@
                 required
                 autofocus
                 autocomplete="name"
-                :placeholder="__('Full name')"
-            />
+                :placeholder="__('Full name')" />
 
             <!-- Email Address -->
             <flux:input
@@ -26,19 +25,22 @@
                 type="email"
                 required
                 autocomplete="email"
-                placeholder="email@example.com"
-            />
+                placeholder="email@example.com" />
 
             <!-- Password -->
-            <flux:input
-                name="password"
-                :label="__('Password')"
-                type="password"
-                required
-                autocomplete="new-password"
-                :placeholder="__('Password')"
-                viewable
-            />
+            <div class="flex flex-col gap-2">
+                <flux:input
+                    name="password"
+                    :label="__('Password')"
+                    type="password"
+                    required
+                    autocomplete="new-password"
+                    :placeholder="__('Password')"
+                    viewable />
+                <flux:text class="text-xs text-zinc-500 dark:text-zinc-400">
+                    {{ __('Use at least 8 characters with a mix of letters, numbers, and symbols.') }}
+                </flux:text>
+            </div>
 
             <!-- Confirm Password -->
             <flux:input
@@ -48,8 +50,15 @@
                 required
                 autocomplete="new-password"
                 :placeholder="__('Confirm password')"
-                viewable
-            />
+                viewable />
+
+            <!-- Terms and Privacy -->
+            <div class="text-xs text-center text-zinc-500 dark:text-zinc-400">
+                {{ __('By creating an account, you agree to our') }}
+                <flux:link href="#" class="text-zinc-700 dark:text-zinc-300">{{ __('Terms of Service') }}</flux:link>
+                {{ __('and') }}
+                <flux:link href="#" class="text-zinc-700 dark:text-zinc-300">{{ __('Privacy Policy') }}</flux:link>
+            </div>
 
             <div class="flex items-center justify-end">
                 <flux:button type="submit" variant="primary" class="w-full">

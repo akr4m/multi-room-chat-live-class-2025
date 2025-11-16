@@ -1,0 +1,20 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "/Users/akr4m/Library/Application Support/Herd/bin/php84",
+            "args": [
+                "/Users/akr4m/Sites/rechat/artisan",
+                "boost:mcp"
+            ]
+        },
+        "herd": {
+            "command": "/Users/akr4m/Library/Application Support/Herd/bin/php84",
+            "args": [
+                "/Applications/Herd.app/Contents/Resources/herd-mcp.phar"
+            ],
+            "env": {
+                "SITE_PATH": "/Users/akr4m/Sites/rechat"
+            }
+        }
+    }
+}
