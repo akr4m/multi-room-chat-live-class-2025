@@ -23,6 +23,22 @@ class Users extends Component
         return User::whereIn('id', $this->ids)->get();
     }
 
+    #[On('echo-private:chat.room.{room.id},.client-typing')]
+    public function setTyping($user)
+    {
+        if (in_array($user['id'], $this->typingIds)) {
+            return;
+        }
+
+        $this->typingIds[] = $user['id'];
+    }
+
+    #[On('echo-private:chat.room.{room.id},.client-stop-typing')]
+    public function stopTyping($user)
+    {
+        $this->typingIds = array_filter($this->typingIds, fn ($id) => $id !== $user['id']);
+    }
+
     #[On('echo-presence:chat.room.{room.id},here')]
     public function setUsersHere($users)
     {

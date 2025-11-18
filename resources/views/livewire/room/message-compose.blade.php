@@ -5,8 +5,28 @@
      <div class="min-w-0 flex-1">
          <div class="relative">
              <div class="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:bg-white/5 dark:outline-white/10 dark:focus-within:outline-indigo-500">
-                 <label for="body" class="sr-only">Add your comment</label>
-                 <textarea wire:model="form.body" id="body" name="body" rows="3" placeholder="Add your comment..." class="block w-full resize-none bg-transparent px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 dark:text-white dark:placeholder:text-gray-500"></textarea>
+                 <label for="body" class="sr-only">Add your message</label>
+                 <textarea
+                     wire:model="form.body"
+                     id="body"
+                     name="body"
+                     rows="3"
+                     placeholder="Say something..."
+                     x-data="{
+                        typingTimeout: null
+                     }"
+                     x-on:keydown="
+                        clearTimeout(typingTimeout);
+
+                        Echo.private('chat.room.{{ $room->id }}')
+                            .whisper('typing', { id: {{ auth()->id() }} });
+
+                        typingTimeout = setTimeout(() => {
+                            Echo.private('chat.room.{{ $room->id }}')
+                                .whisper('stop-typing', { id: {{ auth()->id() }} });
+                        }, 3000);
+                     "
+                     class="block w-full resize-none bg-transparent px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 dark:text-white dark:placeholder:text-gray-500"></textarea>
 
                  <!-- Spacer element to match the height of the toolbar -->
                  <div aria-hidden="true" class="py-2">
